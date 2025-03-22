@@ -1,43 +1,45 @@
 import React from "react";
-import { Doughnut } from "react-chartjs-2";
-import {
-  Chart as ChartJS,
-  ArcElement,
-  Tooltip,
-  Legend,
-} from "chart.js";
+import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 
-// Register necessary Chart.js components
-ChartJS.register(ArcElement, Tooltip, Legend);
+const CustomPieChart = ({ data }) => {
+  // Calculate total for percentage
+  const total = data.reduce((sum, item) => sum + item.y, 0);
 
-const PieChart = ({ data }) => {
-  const chartData = {
-    labels: data.map((item) => item.name), // Extract labels from data
-    datasets: [
-      {
-        data: data.map((item) => item.y), // Extract values from data
-        backgroundColor: ["#FF4500", "#4CAF50", "#2196F3", "#FFC107", "#9C27B0"], // Example colors
-        hoverBackgroundColor: ["#FF5722", "#66BB6A", "#42A5F5", "#FFD54F", "#BA68C8"],
-      },
-    ],
-  };
-
-  const options = {
-    responsive: true,
-    maintainAspectRatio: false,
-    plugins: {
-      legend: { position: "top", labels: { color: "#FFFFFF" } },
-    },
-  };
+  // Format data for MUI PieChart
+  const chartData = data.map((item, index) => ({
+    id: item.name,
+    value: item.y,
+    label: `${item.name}: ${(item.y / total * 100).toFixed(1)}%`, // Show name + percentage
+    color: ["#FF4500", "#4CAF50", "#2196F3", "#FFC107", "#9C27B0"][index % 5], // Assign colors dynamically
+  }));
 
   return (
-    <div style={{ backgroundColor: "#000", padding: "20px", borderRadius: "8px", textAlign: "center" }}>
-      <h2 style={{ color: "#FFF" }}>Top Store</h2>
-      <div style={{ height: "400px" }}>
-        <Doughnut data={chartData} options={options} />
-      </div>
+    <div style={{ backgroundColor: "#2A2A2A", padding: "20px", borderRadius: "12px", textAlign: "center", width: "500px", margin: "auto" }}>
+      <h2 style={{ color: "#FFF", fontSize: "18px", marginBottom: "10px" }}>📊 Top Store Sales</h2>
+      <PieChart
+        series={[
+          {
+            data: chartData,
+            outerRadius: 100, // Standard Pie Chart
+            innerRadius: 40, // Donut style
+            paddingAngle: 5,
+            arcLabel: (item) => item.label, // Display "Name: %"
+            arcLabelMinAngle: 20, // Ensure small slices still have labels
+            arcLabelRadius: "70%", // Adjust label placement
+          },
+        ]}
+        sx={{
+          [`& .${pieArcLabelClasses.root}`]: {
+            fontWeight: "bold",
+            fill: "#FFF", // Ensures white text color
+            fontSize: "14px", // Slightly larger for better readability
+          },
+        }}
+        width={500}
+        height={320}
+      />
     </div>
   );
 };
 
-export default PieChart;
+export default CustomPieChart;

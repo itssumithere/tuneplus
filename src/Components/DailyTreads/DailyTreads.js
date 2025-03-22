@@ -5,7 +5,7 @@ import { getData } from '../../Services/Ops'
 import ChartZoomPan from '../Common/Chart/ChartZoomPan'
 import CircleGraph from '../Common/Chart/CircleGraph'
 import MarketGraph from '../Common/Chart/MarketGraph'
-import PaiChart from '../Common/Chart/PaiChart'
+import CustomPieChart from '../Common/Chart/PaiChart'
 import SimpleGraph from '../Common/Chart/SimpleGraph'
 import SplineChart from '../Common/Chart/SplineChart'
 // import DrillDown from '../Common/Chart/DrillDown'
@@ -186,7 +186,7 @@ export default function DailyTreads() {
           <section className="daily-trend content">
 
 
-            <div className="top-store dash-detail dash-detail-two">
+            <div className="top-store dash-detail dash-detail-two ">
 
               <div className="track-heading d-flex flex-wrap align-items-center justify-content-between">
                 <h2>Top Store</h2>
@@ -199,11 +199,11 @@ export default function DailyTreads() {
                 </div>
               </div>
               {topStores.length > 0 ?
-                <div class="row">
+                <div class="d-flex gap-4">
                   <div class='col-lg-6 col-12'>
                     <div className="dash-detail">
                       <div className="box-body">
-                        <PaiChart data={topStores} />
+                        <CustomPieChart data={topStores} />
                       </div>
                     </div>
                   </div>
@@ -366,7 +366,7 @@ export default function DailyTreads() {
 
                 {trackList.length > 0 ?
                   trackListTab == "graph" ?
-                    <SimpleGraph data={trackList} title={"Tracks"} type={'pyramid'} />
+                    <MarketGraph charDdata={trackList} />
                     :
                     <table id="tracks" className="table table-bordered table-hover dataTable" aria-describedby="example2_info" style={{ height: "420px", overflowY: "auto", display: "block", border: 0 }} >
                       <thead>
