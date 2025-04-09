@@ -431,7 +431,7 @@ export default function DailyTreads() {
                           <th >Title</th>
                           <th >Label</th>
                           <th >Artist</th>
-                          <th >IRSC</th>
+                          <th >ISRC</th>
                           <th >STREAM</th>
                           <th >STREAM %</th>
                           <th >STREAMS CHANGE</th>
