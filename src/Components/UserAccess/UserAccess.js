@@ -93,7 +93,7 @@ const UserAccess = (props) => {
               <tbody>
                 {users && users?.map((user) => (
                   <tr key={user?.userDetails?._id}>
-                    <td>{user?.userDetails?.name}</td>
+                    <td>{user?.userDetails?.companyName}</td>
                     <td>{user?.userDetails?.clientNumber}</td>
 
                     <td>{user?.userDetails?.email}</td>

@@ -90,7 +90,7 @@ export default function STEP3(props) {
 
   const initialStoreList = [
     { id: '1', name: 'Mixing Eng', value: '' },
-    { id: '2', name: 'Mastering Eng', value: '' },
+    { id: '2', name: 'Add Engineer', value: '' },
   ];
   const initialOtherContributoryList = [
     { id: '1', name: 'Acoustic Guitar', value: '' },
