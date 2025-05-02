@@ -75,6 +75,8 @@ const base = {
   getUser: mainUrl + "auth/get-user",
   dashboardCount: mainUrl+"dashboard/get-dashboard-list",
   getAllReport: mainUrl + "excel/get-all-report",
-  deleteStore: mainUrl + "excel/delete-report"
+  deleteStore: mainUrl + "excel/delete-report",
+  downloadDb: mainUrl + "setting/downloadDb",
+  uploadExcelFile: mainUrl + "upload/excel",
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };

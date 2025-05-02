@@ -2,6 +2,10 @@ import React, { useState, useEffect } from "react";
 import { images } from "../../assets/images";
 import { useUserProfile } from "../../Context/UserProfileContext";
 import AuthController from "../../Controllers/Auth-controller/AuthController";
+import axios from "axios";
+import { base } from "../../Constants/Data.constant";
+import { getData } from "../../Services/Ops";
+import moment from "moment";
 export const SideBar = (props) => {
   const { handleLogout } = AuthController()
   const { userPermission, userProfile } = useUserProfile()
@@ -23,6 +27,46 @@ export const SideBar = (props) => {
                   : name == "Withdraw Request" ? "fa fa-sort-amount-asc"
                     : name == "All Transcations" ? "fa fa-random"
                       : "fa fa-sort-amount-asc"
+  }
+  
+  const downloadDatabase = async () => {
+    try {
+      // Show loading indicator or message to user
+      console.log("Database download started..."); 
+      // Make the API request
+      const response = await getData(base.downloadDb);
+      console.log("Download successful:", response);
+      // if (response.data && response.data.status) {
+        console.log("Download successful:", response.data);
+        const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = moment(new Date()).format("DD-MM-YYY HH:MM:SS")+"musicDB.json";
+        a.click();
+
+        // If the API returns a file path or download URL
+        // if (response.data.data && response.data.data.filePath) {
+        //   // Create a download link for the file
+        //   const link = document.createElement('a');
+        //   link.href = `/api/download?path=${encodeURIComponent(response.data.data.filePath)}`;
+        //   link.download = response.data.data.filePath.split('/').pop();
+        //   document.body.appendChild(link);
+        //   link.click();
+        //   document.body.removeChild(link);
+
+        //   alert("Database downloaded successfully!");
+        // } else {
+        //   alert("Database processed successfully!");
+        // }
+      // } else {
+      //   console.error("Download failed:", response.data);
+      //   alert("Failed to download database. Please try again.");
+      // }
+    } catch (error) {
+      console.error("Download error:", error);
+      alert("Error downloading database: " + (error.message || "Unknown error"));
+    }
   }
   return (
     <div className="sidebar-main" id="navbarSupportedContent">
@@ -61,6 +105,11 @@ export const SideBar = (props) => {
             <li className="nav-item">
               <a className="nav-link" href="/Withdraw Request">
                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon5.png')} />Withdraw Request
+              </a>
+            </li>
+            <li className="nav-item">
+              <a className="nav-link" onClick={()=>downloadDatabase()}>
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon4.png')} />Download DB
               </a>
             </li>
           </>
@@ -113,10 +162,10 @@ export const SideBar = (props) => {
               </a>
             </li>
           ))}
-         <div className="user-detail d-flex flex-wrap " style={{marginTop:200}}></div>
+        <div className="user-detail d-flex flex-wrap " style={{ marginTop: 200 }}></div>
         <div className="user-detail d-flex flex-wrap item-align-center" >
           Copyright ©2025 J2P ENTERTAINMENT DIGITAL PRIVATE LIMITED
-        </div>  
+        </div>
 
       </ul>
 

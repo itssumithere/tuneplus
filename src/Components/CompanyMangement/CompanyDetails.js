@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
 import { Nav } from '../Common/Nav'
 import Papa from 'papaparse'
-import { getData, postData } from '../../Services/Ops';
+import { getData, postData, postDataContent } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
 import Swal from 'sweetalert2';
 import { SideBar } from '../Common/SideBar';
@@ -16,6 +16,44 @@ export default function CompanyDetails() {
   const [trackList, setTrackList] = useState([])
   const [userDetails, setUserDetails] = useState({})
   const [allReport, setAllReport] = useState({})
+
+  // Add these to your existing state declarations at the top of the component
+  const [showModal, setShowModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState({});
+  const [currentItemId, setCurrentItemId] = useState(null);
+  const [type, setType] = useState(''); // Default type is 'market'
+
+  // Add this function to handle file upload
+  const handleUploadExcel = async () => {
+
+    if (!selectedFile || !currentItemId) {
+      Swal.fire("Error", "Please select a file first", "error");
+      return;
+    }
+
+    // Create FormData to send the file
+    const formData = new FormData();
+    formData.append('file', selectedFile);
+    formData.append('type', type);
+    formData.append('id', currentItemId);
+
+    try {
+      // Replace with your actual API endpoint for file upload
+      const result = await postDataContent(base.uploadExcelFile, formData, true); // true flag for multipart/form-data
+
+      if (result.status === true) {
+        Swal.fire("Success", "File uploaded successfully", "success");
+        setShowModal(false);
+        setSelectedFile(null);
+        getAllReport(); // Refresh the data
+      } else {
+        Swal.fire("Error", result.message || "Upload failed", "error");
+      }
+    } catch (error) {
+      console.error("Upload error:", error);
+      Swal.fire("Error", "Something went wrong during upload", "error");
+    }
+  };
 
 
 
@@ -219,7 +257,7 @@ export default function CompanyDetails() {
   };
 
 
-  const getAllReport = async () => { 
+  const getAllReport = async () => {
     setAllReport([])
     let body = {
       userId: userId
@@ -333,6 +371,7 @@ export default function CompanyDetails() {
                               <th >#</th>
                               <th >name</th>
                               <th > Quantity</th>
+                              <th>Excel Data</th>
                             </tr>
                           </thead>
                           <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -341,6 +380,26 @@ export default function CompanyDetails() {
                                 <td className="  sorting_1">{index + 1}</td>
                                 <td className="  sorting_1">{item.Store}</td>
                                 <td className="  ">{item.Quantity}</td>
+                                <td>
+                                {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+
+                                    <button
+                                      className="btn btn-sm btn-info"
+                                      onClick={() => {
+                                        setCurrentItemId(item._id); // Store the current item ID
+                                        setShowModal(true);
+                                        setType('store'); // Set the type to 'market'
+                                      }}
+                                    >
+                                      <i className="fa fa-file-excel-o"></i> Upload Excel
+                                    </button>
+                                  
+                                </td>
+
                               </tr>
                             ))}
                           </tbody>
@@ -411,6 +470,7 @@ export default function CompanyDetails() {
                               <th >#</th>
                               <th >name</th>
                               <th > Quantity</th>
+                              <th>Excel Upload</th>
                             </tr>
                           </thead>
                           <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -419,11 +479,81 @@ export default function CompanyDetails() {
                                 <td className="  sorting_1">{index + 1}</td>
                                 <td className="  sorting_1">{item.Market}</td>
                                 <td className="  ">{item.Quantity}</td>
+
+                                <td>
+                                {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+
+                                    <button
+                                      className="btn btn-sm btn-info"
+                                      onClick={() => {
+                                        setCurrentItemId(item._id); // Store the current item ID
+                                        setShowModal(true);
+                                        setType('market'); // Set the type to 'market'
+                                      }}
+                                    >
+                                      <i className="fa fa-file-excel-o"></i> Upload Excel
+                                    </button>
+                                  
+                                </td>
+
+
                               </tr>
                             ))}
                           </tbody>
 
                         </table>
+
+                        {showModal && (
+                          <div className="modal" style={{ display: 'block', backgroundColor: 'rgba(73, 72, 72, 0.76)' }}>
+                            <div className="modal-dialog">
+                              <div className="modal-content">
+                                <div className="modal-header" style={{   backgroundColor: 'rgb(0, 0, 0)' }}>
+                                  <h4 className="modal-title">Upload Excel File</h4>
+                                  <button type="button" className="close" onClick={() => setShowModal(false)}>
+                                    <span>&times;</span>
+                                  </button>
+                                </div>
+                                <div className="modal-body" style={{ display: 'block', backgroundColor: 'rgb(0, 0, 0)' }}>
+                                  <div className="form-group" style={{ display: 'block', backgroundColor: 'rgb(0, 0, 0)' }}>
+                                    <label>Select Excel File:</label>
+                                    <input
+                                      type="file"
+                                      accept=".xlsx,.xls,.csv"
+                                      onChange={(e) => {
+                                        if (e.target.files && e.target.files.length > 0) {
+                                          const file = e.target.files[0];
+                                          let obj = {
+                                            name: file.name,
+                                            type: file.type
+                                          }
+                                          setSelectedFile(file);
+                                          console.log("Selected file:", file.name, file.type);
+                                        } else {
+                                          console.log("No file selected");
+                                        }
+                                      }}
+                                      className="form-control"
+                                    />
+                                  </div>
+                                </div>
+                                <div className="modal-footer" style={{   backgroundColor: 'rgb(0, 0, 0)' }}>
+                                  <button type="button" className="btn btn-dangar" onClick={() => setShowModal(false)}>
+                                    Close
+                                  </button>
+                                  <button type="button" className="btn btn-primary" onClick={handleUploadExcel}>
+                                    Upload
+                                  </button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+
+
                         <button
                           onClick={() => deleteData("market")}
                           type="Submit"
@@ -485,6 +615,7 @@ export default function CompanyDetails() {
                               <th >#</th>
                               <th >name</th>
                               <th > Quantity</th>
+                              <th>Excel Data</th>
                             </tr>
                           </thead>
                           <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -493,6 +624,26 @@ export default function CompanyDetails() {
                                 <td className="  sorting_1">{index + 1}</td>
                                 <td className="  sorting_1">{item.Track}</td>
                                 <td className="  ">{item.Quantity}</td>
+                                <td>
+                                {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+
+                                    <button
+                                      className="btn btn-sm btn-info"
+                                      onClick={() => {
+                                        setCurrentItemId(item._id); // Store the current item ID
+                                        setShowModal(true);
+                                        setType('track'); // Set the type to 'market'
+                                      }}
+                                    >
+                                      <i className="fa fa-file-excel-o"></i> Upload Excel
+                                    </button>
+                                  
+                                </td>
+
                               </tr>
                             ))}
                           </tbody>
@@ -563,6 +714,7 @@ export default function CompanyDetails() {
                               <th >#</th>
                               <th >name</th>
                               <th > Quantity</th>
+                              <th>Excel Data</th>
                             </tr>
                           </thead>
                           <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -571,6 +723,26 @@ export default function CompanyDetails() {
                                 <td className="  sorting_1">{index + 1}</td>
                                 <td className="  sorting_1">{item.dsp}</td>
                                 <td className="  ">{item.streams}</td>
+                                <td>
+                                {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+
+                                    <button
+                                      className="btn btn-sm btn-info"
+                                      onClick={() => {
+                                        setCurrentItemId(item._id); // Store the current item ID
+                                        setShowModal(true);
+                                        setType('salesStream'); // Set the type to 'market'
+                                      }}
+                                    >
+                                      <i className="fa fa-file-excel-o"></i> Upload Excel
+                                    </button>
+                                  
+                                </td>
+
                               </tr>
                             ))}
                           </tbody>
@@ -640,6 +812,7 @@ export default function CompanyDetails() {
                               <th >#</th>
                               <th >name</th>
                               <th > Quantity</th>
+                              <th > Excel Data</th>
                             </tr>
                           </thead>
                           <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -647,7 +820,27 @@ export default function CompanyDetails() {
                               <tr className="odd">
                                 <td className="  sorting_1">{index + 1}</td>
                                 <td className="  sorting_1">{item.DSP}</td>
-                                <td className="  ">{item.SaleID}</td>
+                                <td >{item.SaleID}</td>
+                                <td>
+                                {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+
+                                    <button
+                                      className="btn btn-sm btn-info"
+                                      onClick={() => {
+                                        setCurrentItemId(item._id); // Store the current item ID
+                                        setShowModal(true);
+                                        setType('salesAsset'); // Set the type to 'market'
+                                      }}
+                                    >
+                                      <i className="fa fa-file-excel-o"></i> Upload Excel
+                                    </button>
+                                  
+                                </td>
+
                               </tr>
                             ))}
                           </tbody>
@@ -718,6 +911,7 @@ export default function CompanyDetails() {
                               <th >#</th>
                               <th >name</th>
                               <th > Quantity</th>
+                              <th > Excel Data</th>
                             </tr>
                           </thead>
                           <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -726,6 +920,26 @@ export default function CompanyDetails() {
                                 <td className="  sorting_1">{index + 1}</td>
                                 <td className="  sorting_1">{item.Title}</td>
                                 <td className="  ">{item.Label}</td>
+                                <td>
+                                  {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+
+                                  <button
+                                    className="btn btn-sm btn-info"
+                                    onClick={() => {
+                                      setCurrentItemId(item._id); // Store the current item ID
+                                      setShowModal(true);
+                                      setType('inside'); // Set the type to 'market'
+                                    }}
+                                  >
+                                    <i className="fa fa-file-excel-o"></i> Upload Excel
+                                  </button>
+
+                                </td>
+
                               </tr>
                             ))}
                           </tbody>
@@ -814,3 +1028,7 @@ export default function CompanyDetails() {
     </div>
   )
 }
+
+
+// Replace the existing button with this updated version
+

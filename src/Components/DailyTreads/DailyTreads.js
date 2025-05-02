@@ -45,10 +45,10 @@ export default function DailyTreads() {
     if (result?.status) {
       let arr = []
       result?.data?.map((item, index) => {
-        arr.push({ name: item.Store, y: item.Quantity })
+        arr.push({ name: item.Store, y: item.Quantity ,Excel:item.Excel})
       })
       setTopStores(arr)
-    }else{
+    } else {
       setTopStores([])
     }
   }
@@ -58,12 +58,12 @@ export default function DailyTreads() {
     if (result?.status) {
       let arr = []
       result.data?.map((item, index) => {
-        arr.push({ x: index, label: item.Market, y: item.Quantity })
+        arr.push({ x: index, label: item.Market, y: item.Quantity ,Excel:item.Excel})
       })
       setMarketList(arr);
-    }else{
+    } else {
       setMarketList([]);
-      
+
     }
   }
   const getStream = async (query) => {
@@ -72,10 +72,10 @@ export default function DailyTreads() {
     if (result?.status) {
       let arr = []
       result.data?.map((item, index) => {
-        arr.push({ x: index, label: item.dsp, y: item.streams })
+        arr.push({ x: index, label: item.dsp, y: item.streams, Excel:item.Excel })
       })
       setStreamList(arr);
-    }else{
+    } else {
       setStreamList([]);
 
     }
@@ -86,10 +86,10 @@ export default function DailyTreads() {
     if (result?.status) {
       let arr = []
       result.data?.map((item, index) => {
-        arr.push({ x: index, label: item.Track, y: item.Quantity })
+        arr.push({ x: index, label: item.Track, y: item.Quantity, Excel:item.Excel  })
       })
       setTrackList(arr);
-    }else{
+    } else {
       setTrackList([]);
 
     }
@@ -98,9 +98,9 @@ export default function DailyTreads() {
   const getInside = async (query) => {
     let result = await getData(base.getInside + `?${query}`)
     console.log("result getTracks-------", result)
-    if (result?.status) { 
+    if (result?.status) {
       setInsideList(result?.data);
-    }else{
+    } else {
       setInsideList([]);
     }
   }
@@ -140,7 +140,7 @@ export default function DailyTreads() {
                 <label htmlFor="releaseDate">Start Date</label>
                 <input
                   value={startDate}
-                  type="date" 
+                  type="date"
                   className="form-control"
                   onChange={(e) => setStartDate(e.target.value)}
                 />
@@ -216,6 +216,7 @@ export default function DailyTreads() {
                           <th >#</th>
                           <th >name</th>
                           <th > Quantity</th>
+                          <th>Excel Data</th>
                         </tr>
                       </thead>
                       <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -224,6 +225,12 @@ export default function DailyTreads() {
                             <td className="  sorting_1">{index + 1}</td>
                             <td className="  sorting_1">{item.name}</td>
                             <td className="  ">{item.y}</td>
+                            <td> {item.Excel != "" &&
+                              <a href={item.Excel} target='_blank'>
+                                <i className="fa fa-download"></i> Download Excel
+                              </a>
+                            }
+                            </td>
                           </tr>
                         ))}
                       </tbody>
@@ -264,6 +271,7 @@ export default function DailyTreads() {
                           <th >#</th>
                           <th >Label</th>
                           <th > Quantity</th>
+                          <th>Excel Data</th>
                         </tr>
                       </thead>
                       <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -272,6 +280,12 @@ export default function DailyTreads() {
                             <td className="  sorting_1">{index + 1}</td>
                             <td className="  sorting_1">{item.label}</td>
                             <td className="  ">{item.y}</td>
+                            <td> {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+                                  </td>
                           </tr>
                         ))}
                       </tbody>
@@ -319,6 +333,7 @@ export default function DailyTreads() {
                           <th >Label</th>
                           <th > Quantity</th>
                           <th > % Stream</th>
+                          <th>Excel Data</th>
 
                         </tr>
                       </thead>
@@ -329,7 +344,12 @@ export default function DailyTreads() {
                             <td className="  sorting_1">{item.label}</td>
                             <td className="  ">{item.y}</td>
                             <td className="  ">{item.y * 100 / 100000}</td>
-
+                            <td> {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+                                  </td>
                           </tr>
                         ))}
                       </tbody>
@@ -374,6 +394,7 @@ export default function DailyTreads() {
                           <th >#</th>
                           <th >Label</th>
                           <th >Quantity</th>
+                          <th>Excel Data</th>
                         </tr>
                       </thead>
                       <tbody role="alert" aria-live="polite" aria-relevant="all">
@@ -382,6 +403,12 @@ export default function DailyTreads() {
                             <td className="  sorting_1">{index + 1}</td>
                             <td className="  sorting_1">{item.label}</td>
                             <td className="  ">{item.y}</td>
+                            <td> {item.Excel != "" &&
+                                    <a href={item.Excel} target='_blank'>
+                                      <i className="fa fa-download"></i> Download Excel
+                                    </a>
+                                  }
+                                  </td>
                           </tr>
                         ))}
                       </tbody>
@@ -411,10 +438,10 @@ export default function DailyTreads() {
                   </div> */}
                 </div>
                 {/* {insideTab == "table" && */}
-                  <button className="btn btn-primary "
-                    onClick={() => {
-                      exportTableToExcel('tracks', 'tracksData.xlsx')
-                    }}>Download</button>
+                <button className="btn btn-primary "
+                  onClick={() => {
+                    exportTableToExcel('tracks', 'tracksData.xlsx')
+                  }}>Download</button>
                 {/* } */}
               </div>
 
@@ -424,40 +451,40 @@ export default function DailyTreads() {
                   // insideTab == "graph" ?
                   //   <SimpleGraph data={insideList} title={"Inside"} type={'pyramid'} />
                   //   :
-                    <table id="tracks" className="table table-bordered table-hover dataTable" aria-describedby="example2_info" style={{ height: "420px", overflowY: "auto", display: "block", border: 0 }} >
-                      <thead>
-                        <tr role="row">
-                          <th >#</th>
-                          <th >Title</th>
-                          <th >Label</th>
-                          <th >Artist</th>
-                          <th >ISRC</th>
-                          <th >STREAM</th>
-                          <th >STREAM %</th>
-                          <th >STREAMS CHANGE</th>
-                          <th >STREAM CHANGE %</th>
+                  <table id="tracks" className="table table-bordered table-hover dataTable" aria-describedby="example2_info" style={{ height: "420px", overflowY: "auto", display: "block", border: 0 }} >
+                    <thead>
+                      <tr role="row">
+                        <th >#</th>
+                        <th >Title</th>
+                        <th >Label</th>
+                        <th >Artist</th>
+                        <th >ISRC</th>
+                        <th >STREAM</th>
+                        <th >STREAM %</th>
+                        <th >STREAMS CHANGE</th>
+                        <th >STREAM CHANGE %</th>
 
 
+
+                      </tr>
+                    </thead>
+                    <tbody role="alert" aria-live="polite" aria-relevant="all">
+                      {insideList.length > 0 && insideList.map((item, index) => (
+                        <tr className="odd">
+                          <td className="  sorting_1">{index + 1}</td>
+                          <td className="  sorting_1">{item.Title}</td>
+                          <td className="  sorting_1">{item.Label}</td>
+                          <td className="  sorting_1">{item.Artist}</td>
+                          <td className="  sorting_1">{item.ISRC}</td>
+                          <td className="  sorting_1">{item.Streams}</td>
+                          <td className="  ">{item.Streams * 100 / 100000}</td>
+                          <td className="  ">{item.Streamschange}</td>
+                          <td className="  ">{item.Streams * 100 / 100000}</td>
 
                         </tr>
-                      </thead>
-                      <tbody role="alert" aria-live="polite" aria-relevant="all">
-                        {insideList.length > 0 && insideList.map((item, index) => (
-                          <tr className="odd">
-                            <td className="  sorting_1">{index + 1}</td>
-                            <td className="  sorting_1">{item.Title}</td>
-                            <td className="  sorting_1">{item.Label}</td> 
-                            <td className="  sorting_1">{item.Artist}</td>  
-                            <td className="  sorting_1">{item.ISRC}</td>
-                            <td className="  sorting_1">{item.Streams}</td>
-                            <td className="  ">{item.Streams * 100 / 100000}</td>
-                            <td className="  ">{item.Streamschange}</td>
-                            <td className="  ">{item.Streams * 100 / 100000 }</td>
-
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
+                      ))}
+                    </tbody>
+                  </table>
                   :
                   <>
                     <img className="img-fluid" title="Dashboard" src={require('../../assets/images/nodatafound.png')} />
