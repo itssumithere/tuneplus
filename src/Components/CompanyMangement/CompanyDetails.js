@@ -289,20 +289,35 @@ export default function CompanyDetails() {
       alert("No file available to download");
       return;
     }
-
+    
     try {
+      // For production environments, we may need to handle CORS
       // Create a temporary anchor element
       const link = document.createElement('a');
+      
+      // Check if URL is relative and convert to absolute if needed
+      if (url.startsWith('/') && !url.startsWith('//')) {
+        url = window.location.origin + url;
+      }
+      
       link.href = url;
-
+      
       // Extract filename from URL or use a default name
       const filename = url.split('/').pop() || name + '.xlsx';
       link.download = filename;
-
+      
+      // Set additional attributes that might help in production
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      
       // Append to body, click and remove
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      
+      // Small timeout before removing to ensure the download starts
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 100);
     } catch (error) {
       console.error("Error downloading file:", error);
       alert("Failed to download file. Please try again.");
