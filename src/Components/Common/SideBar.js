@@ -112,6 +112,11 @@ export const SideBar = (props) => {
                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon4.png')} />Download DB
               </a>
             </li>
+            {/* <li className="nav-item">
+              <a className="nav-link" href="/Financial Report">
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon6.png')} />Financial Report
+              </a>
+            </li> */}
           </>
 
         )}

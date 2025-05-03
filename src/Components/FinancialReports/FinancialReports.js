@@ -32,7 +32,7 @@ return (
           {/* 
           <h2>AVAILABLE REPORTS</h2>
           */}
-          <div className="step-tab report-tab">
+          {/* <div className="step-tab report-tab">
             <button
             className={`tab ${activeTab === "automatic" ? "active" : ""}`}
             onClick={() => setActiveTab("automatic")}
@@ -50,7 +50,8 @@ return (
           <AutomaticReports report={report}/>
           :
           <RequestedReports />
-          }
+          } */}
+           <RequestedReports />
         </div>
       </section>
     </div>

@@ -15,47 +15,74 @@ const AutomaticReports = (props) => {
 
 
   const [report, setReport] = useState([])
+
   useEffect(() => {
-    //getReoprt();
+    getReoprt();
   }, [])
 
   const getReoprt = async () => {
-    let body =  {
-      startDate: startDate,
-      endDate: endDate,
+    let body = {
+      userId: "6378290424"
     }
-    console.log(body)
+    let result = await postData(base.getFincialReport, body)
+    console.log("getReoprt---getFincialReport---------", result.data)
+    if (result.data.data.length > 0) {
+      setReport(result.data.data)
+    } else {
+      setReport([])
+    }
 
-    let result = await postData(base.getReportbydate, body)
-    console.log("getReoprt------------", result)
-    setReport(result?.data)
   }
 
-
-  function exportTableToExcel(tableId, fileName = 'TableData.xlsx') {
-    // Get the table element by ID
-    const table = document.getElementById(tableId);
-    if (!table) {
-      console.error(`Table with ID ${tableId} not found.`);
+  const downloadFile = (url, name) => {
+    if (!url || url === "") {
+      alert("No file available to download");
       return;
     }
 
-    // Convert table to a worksheet
-    const worksheet = XLSX.utils.table_to_sheet(table);
+    try {
+      // Create a temporary anchor element
+      const link = document.createElement('a');
 
-    // Create a new workbook and add the worksheet to it
-    const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Sheet1');
+      // Ensure URL uses HTTPS instead of HTTP
+      if (url.startsWith('http:')) {
+        url = url.replace('http:', 'https:');
+      }
 
-    // Export the workbook to an Excel file
-    XLSX.writeFile(workbook, fileName);
+      // Check if URL is relative and convert to absolute if needed
+      if (url.startsWith('/') && !url.startsWith('//')) {
+        url = window.location.origin + url;
+      }
+
+      link.href = url;
+
+      // Extract filename from URL or use a default name
+      const filename = url.split('/').pop() || name + '.xlsx';
+      link.download = filename;
+
+      // Set additional attributes that might help in production
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+
+      // Append to body, click and remove
+      document.body.appendChild(link);
+      link.click();
+
+      // Small timeout before removing to ensure the download starts
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 100);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      alert("Failed to download file. Please try again.");
+    }
   }
 
   return (
     <div className="reports-container">
       <div className="box-header">
-        <h3 className="box-title">Automatic Report</h3>
-        <div className="row">
+        {/* <h3 className="box-title">Automatic Report</h3> */}
+        {/* <div className="row">
           <div className="col-md-3 col-sm-6 col-12">
             <div className="form-group">
               <label htmlFor="releaseDate">Start Date</label>
@@ -102,64 +129,39 @@ const AutomaticReports = (props) => {
 
             </div>
           </div>
-        </div>
+        </div> */}
 
       </div>
       <div className="reports-table">
         <div className="box-body table-responsive">
-          <table id="example2" className="table table-bordered table-striped">
-            <thead>
-              <tr>
-                {/* Static Table Headers */}
-                <th>Sale Start Date</th>
-                <th>Sale End Date</th>
-                <th>DSP</th>
-                <th>Sale Store Name</th>
-                <th>Sale Type</th>
-                <th>Sale User Type</th>
-                <th>Territory</th>
-                <th>Product Artist</th>
-                <th>Product Title</th>
-                <th>Asset Artist</th>
-                <th>Asset Title</th>
-                <th>Original Gross Income</th>
-                <th>Converted Gross Income</th>
-                <th>Currency</th>
-                {/* <th>Actions</th> */}
-              </tr>
-            </thead>
-            <tbody>
-              {report?.map((report, index) => (
-                <tr key={index}>
-                  {/* Static Table Data based on predefined keys */}
-                  <td>{report.SaleStartdate}</td>
-                  <td>{report.SaleEnddate}</td>
-                  <td>{report.DSP}</td>
-                  <td>{report.SaleStoreName}</td>
-                  <td>{report.SaleType}</td>
-                  <td>{report.SaleUserType}</td>
-                  <td>{report.Territory}</td>
-                  <td>{report.ProductArtist}</td>
-                  <td>{report.ProductTitle}</td>
-                  <td>{report.AssetArtist}</td>
-                  <td>{report.AssetTitle}</td>
-                  <td>{report.OriginalGrossIncome.$numberDecimal}</td>
-                  <td>{report.ConvertedGrossIncome.$numberDecimal}</td>
-                  <td>{report.Currency}</td>
-                  {/* <td>
-                    <div className="action-buttons">
-                        <button title="Download" className="action-button">
-                        <i className="fa fa-download"></i>
-                      </button>  
-                       <button title="Delete" className="action-button delete">
-                        <i className="fa fa-trash"></i>
-                      </button>  
-                    </div>
-                  </td> */}
+          {report && report.length === 0 ? (
+            <p>No data available.</p>
+          ) : (
+            <table id="example2" className="table table-bordered table-striped">
+              <thead>
+                <tr>
+                  {/* Static Table Headers */}
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Excel Data</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {report?.map((item, index) => (
+                  <tr key={index}>
+                    {/* Static Table Data based on predefined keys */}
+                    <td>{item.toDate}</td>
+                    <td>{item.fromDate}</td>
+                    <td>
+                      <a onClick={() => { downloadFile(item.excelUrl) }}>
+                        <i className="fa fa-download"></i> Download Excel
+                      </a>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          )}
         </div>
 
       </div>

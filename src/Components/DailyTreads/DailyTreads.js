@@ -272,7 +272,7 @@ export default function DailyTreads() {
                             <td className="  ">{item.y}</td>
                             <td> {item.Excel != "" &&
                               <a onClick={()=>{downloadFile(item.Excel,item.name)}}>
-                                <i className="fa fa-download"></i> Download Excel1
+                                <i className="fa fa-download"></i> Download Excel
                               </a>
                             }
                             </td>

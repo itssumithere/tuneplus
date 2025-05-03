@@ -78,5 +78,9 @@ const base = {
   deleteStore: mainUrl + "excel/delete-report",
   downloadDb: mainUrl + "setting/downloadDb",
   uploadExcelFile: mainUrl + "upload/excel",
+  getFincialReport: mainUrl + 'report/getreport',
+  uploadFinancialReport: mainUrl +'report/reportExcel',
+  deleteReport: mainUrl +'report/deleteReport',
+  updateWallet: mainUrl +'auth/walletUpdate',
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };

@@ -68,10 +68,11 @@ function App() {
       <Route path="/release-details" element={<ReleaseDetails />}></Route>
       {/* <Route path="/edit-permission" element={<EditUserPermission />}></Route> */}
       {/* <Route path="/Payment Operations" element={<PaymentOperations />}></Route>
-      <Route path="/Financial Report" element={<FinancialReport />}></Route>
+     
       <Route path="/multiple-release" element={<Dashboard />}></Route>*/}
       <Route path="/Withdraw Request" element={<WithdrawRequest />}></Route>
       <Route path="/All Transcations" element={<AllTranscations />}></Route>
+     
       {/* <Route path="/Upload" element={<Upload />}></Route> */}
     </Routes>
   }
