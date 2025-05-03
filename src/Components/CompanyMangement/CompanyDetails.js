@@ -291,9 +291,13 @@ export default function CompanyDetails() {
     }
     
     try {
-      // For production environments, we may need to handle CORS
       // Create a temporary anchor element
       const link = document.createElement('a');
+      
+      // Ensure URL uses HTTPS instead of HTTP
+      if (url.startsWith('http:')) {
+        url = url.replace('http:', 'https:');
+      }
       
       // Check if URL is relative and convert to absolute if needed
       if (url.startsWith('/') && !url.startsWith('//')) {

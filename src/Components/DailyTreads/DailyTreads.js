@@ -125,45 +125,49 @@ export default function DailyTreads() {
     XLSX.writeFile(workbook, fileName);
   }
 
-const downloadFile = (url, name) => {
-  if (!url || url === "") {
-    alert("No file available to download");
-    return;
-  }
-  
-  try {
-    // For production environments, we may need to handle CORS
-    // Create a temporary anchor element
-    const link = document.createElement('a');
-    
-    // Check if URL is relative and convert to absolute if needed
-    if (url.startsWith('/') && !url.startsWith('//')) {
-      url = window.location.origin + url;
+  const downloadFile = (url, name) => {
+    if (!url || url === "") {
+      alert("No file available to download");
+      return;
     }
     
-    link.href = url;
-    
-    // Extract filename from URL or use a default name
-    const filename = url.split('/').pop() || name + '.xlsx';
-    link.download = filename;
-    
-    // Set additional attributes that might help in production
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    
-    // Append to body, click and remove
-    document.body.appendChild(link);
-    link.click();
-    
-    // Small timeout before removing to ensure the download starts
-    setTimeout(() => {
-      document.body.removeChild(link);
-    }, 100);
-  } catch (error) {
-    console.error("Error downloading file:", error);
-    alert("Failed to download file. Please try again.");
+    try {
+      // Create a temporary anchor element
+      const link = document.createElement('a');
+      
+      // Ensure URL uses HTTPS instead of HTTP
+      if (url.startsWith('http:')) {
+        url = url.replace('http:', 'https:');
+      }
+      
+      // Check if URL is relative and convert to absolute if needed
+      if (url.startsWith('/') && !url.startsWith('//')) {
+        url = window.location.origin + url;
+      }
+      
+      link.href = url;
+      
+      // Extract filename from URL or use a default name
+      const filename = url.split('/').pop() || name + '.xlsx';
+      link.download = filename;
+      
+      // Set additional attributes that might help in production
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      
+      // Append to body, click and remove
+      document.body.appendChild(link);
+      link.click();
+      
+      // Small timeout before removing to ensure the download starts
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 100);
+    } catch (error) {
+      console.error("Error downloading file:", error);
+      alert("Failed to download file. Please try again.");
+    }
   }
-}
 
   return (
     <div>
