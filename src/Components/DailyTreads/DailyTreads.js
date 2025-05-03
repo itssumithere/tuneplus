@@ -124,6 +124,32 @@ export default function DailyTreads() {
     // Export the workbook to an Excel file
     XLSX.writeFile(workbook, fileName);
   }
+
+const downloadFile = (url,name) => {
+  if (!url || url === "") {
+    alert("No file available to download");
+    return;
+  }
+  
+  try {
+    // Create a temporary anchor element
+    const link = document.createElement('a');
+    link.href = url;
+    
+    // Extract filename from URL or use a default name
+    const filename = url.split('/').pop() || name+'.xlsx';
+    link.download = filename;
+    
+    // Append to body, click and remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  } catch (error) {
+    console.error("Error downloading file:", error);
+    alert("Failed to download file. Please try again.");
+  }
+}
+
   return (
     <div>
       <SideBar />
@@ -226,8 +252,8 @@ export default function DailyTreads() {
                             <td className="  sorting_1">{item.name}</td>
                             <td className="  ">{item.y}</td>
                             <td> {item.Excel != "" &&
-                              <a href={item.Excel} target='_blank'>
-                                <i className="fa fa-download"></i> Download Excel
+                              <a onClick={()=>{downloadFile(item.Excel,item.name)}}>
+                                <i className="fa fa-download"></i> Download Excel1
                               </a>
                             }
                             </td>
@@ -281,9 +307,9 @@ export default function DailyTreads() {
                             <td className="  sorting_1">{item.label}</td>
                             <td className="  ">{item.y}</td>
                             <td> {item.Excel != "" &&
-                                    <a href={item.Excel} target='_blank'>
-                                      <i className="fa fa-download"></i> Download Excel
-                                    </a>
+                                    <a onClick={()=>{downloadFile(item.Excel,item.name)}}>
+                                    <i className="fa fa-download"></i> Download Excel
+                                  </a>
                                   }
                                   </td>
                           </tr>
@@ -345,9 +371,9 @@ export default function DailyTreads() {
                             <td className="  ">{item.y}</td>
                             <td className="  ">{item.y * 100 / 100000}</td>
                             <td> {item.Excel != "" &&
-                                    <a href={item.Excel} target='_blank'>
-                                      <i className="fa fa-download"></i> Download Excel
-                                    </a>
+                                    <a onClick={()=>{downloadFile(item.Excel,item.name)}}>
+                                    <i className="fa fa-download"></i> Download Excel
+                                  </a>
                                   }
                                   </td>
                           </tr>
@@ -404,9 +430,9 @@ export default function DailyTreads() {
                             <td className="  sorting_1">{item.label}</td>
                             <td className="  ">{item.y}</td>
                             <td> {item.Excel != "" &&
-                                    <a href={item.Excel} target='_blank'>
-                                      <i className="fa fa-download"></i> Download Excel
-                                    </a>
+                                     <a onClick={()=>{downloadFile(item.Excel,item.name)}}>
+                                     <i className="fa fa-download"></i> Download Excel
+                                   </a>
                                   }
                                   </td>
                           </tr>
