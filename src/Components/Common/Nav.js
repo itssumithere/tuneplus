@@ -44,61 +44,72 @@ export const Nav = (props) => {
               <div className="navbar-collapse position-relative">
                 <ul className="navbar-nav text-end">
                   <li className="nav-item dropdown">
-                    <a className="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a 
+                      className="nav-link dropdown-toggle" 
+                      href="#" 
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setDropdownVisible(!dropdownVisible);
+                      }}
+                      style={{ cursor: 'pointer' }}
+                    >
                       <img src={images?.user} className="img-fluid" alt="User Image" />
                       <span className="user-name hidden-xs">{userProfile?.name}</span>
                     </a>
  
                     {userProfile?.role != "Admin" && <p>Client Number:- {userProfile.clientNumber}</p>}
-                    <ul className="dropdown-menu position-absolute">
-
-                      <li>
-                        <a href="profile" className="dropdown-item">
-                          <i className="fa fa-user"></i> Profile
-                        </a>
-                      </li>
-                      {
-                        userProfile?.role == "employee" &&
+                    
+                    {dropdownVisible && (
+                      <ul className="dropdown-menu position-absolute show" style={{ display: 'block', right: 0, left: 'auto' }}>
                         <li>
-                          <a href="/bank information" className="dropdown-item">
-                            <i className="fa fa-bank"></i> Bank Information
+                          <a href="profile" className="dropdown-item">
+                            <i className="fa fa-user"></i> Profile
                           </a>
                         </li>
-                      }
-                      {userProfile.role === "company" && (
-                        <>
-                          <li>
-                            <a href="/User Access" className="dropdown-item">
-                              <i className="fa fa-sitemap"></i> User Access
-                            </a>
-                          </li>
+                        {
+                          userProfile?.role == "employee" &&
                           <li>
                             <a href="/bank information" className="dropdown-item">
                               <i className="fa fa-bank"></i> Bank Information
                             </a>
                           </li>
-                          <li>
-                            <a href="password change" className="dropdown-item">
-                              <i className="fa fa-lock"></i> Change Password
-                            </a>
-                          </li>
-                          <li>
-                            <a href="/Support" className="dropdown-item">
-                              <i className="fa fa-support"></i> Support
-                            </a>
-                          </li>
-                        </>
-                      )}
-
-
-
-                      <li>
-                        <a href="#" className="dropdown-item" onClick={handleLogout}>
-                          <i className="fa fa-sign-out"></i> Logout
-                        </a>
-                      </li>
-
-                    </ul>
+                        }
+                        {userProfile.role === "company" && (
+                          <>
+                            <li>
+                              <a href="/User Access" className="dropdown-item">
+                                <i className="fa fa-sitemap"></i> User Access
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/bank information" className="dropdown-item">
+                                <i className="fa fa-bank"></i> Bank Information
+                              </a>
+                            </li>
+                            <li>
+                              <a href="password change" className="dropdown-item">
+                                <i className="fa fa-lock"></i> Change Password
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/Support" className="dropdown-item">
+                                <i className="fa fa-support"></i> Support
+                              </a>
+                            </li>
+                            <li>
+                              <a href="/Report" className="dropdown-item">
+                                <i className="fa fa-money"></i>Financial Report
+                              </a>
+                            </li>
+                          </>
+                        )} 
+                        <li>
+                          <a href="#" className="dropdown-item" onClick={handleLogout}>
+                            <i className="fa fa-sign-out"></i> Logout
+                          </a>
+                        </li>
+                      </ul>
+                    )}
                   </li>
                 </ul>
               </div>

@@ -1,5 +1,5 @@
-const domainUrl = 'https://tuneplusbackend.onrender.com/';
-// const domainUrl = 'http://localhost:8002/';
+// const domainUrl = 'https://tuneplusbackend.onrender.com/';
+const domainUrl = 'http://localhost:8002/';
 // const domainUrl = 'http://192.168.1.18:8001/';
 // const endpoint = "https://api.ridd.in/api/"
 
@@ -78,5 +78,24 @@ const base = {
   deleteStore: mainUrl + "excel/delete-report",
   downloadDb: mainUrl + "setting/downloadDb",
   uploadExcelFile: mainUrl + "upload/excel",
+  getFincialReport: mainUrl + 'report/getreport',
+  uploadFinancialReport: mainUrl +'report/reportExcel',
+  deleteReport: mainUrl +'report/deleteReport',
+  updateWallet: mainUrl +'auth/walletUpdate', 
+
+  uploadTracksReport: mainUrl + 'report/send-track-report',
+  getTracksReport: mainUrl +'report/get-track-report',
+  deleteTrackReport: mainUrl +'report/delete-track-report',
+  uploadStoreReport: mainUrl +'report/sent-store-report',
+  getStoreReport: mainUrl +'report/get-store-report',
+  uploadMarketReport: mainUrl +'report/sent-market-report',
+  getMarketReport: mainUrl +'report/get-market-report',
+  uploadOverviewReport: mainUrl +'report/send-overview-report',
+  getOverViewReport: mainUrl +'report/get-overview-report',
+  getAllFinancialReport: mainUrl + "report/get-all-financial-report",
+  deleteFinancialReport: mainUrl + "report/delete-financial-report",
+  uploadReportExcelFile: mainUrl + "upload/reportExcel",
+
+  
 };
 export { base, domainUrl, imageServerUrl, USER_TYPE };

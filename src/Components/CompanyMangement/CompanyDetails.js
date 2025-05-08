@@ -6,6 +6,8 @@ import { getData, postData, postDataContent } from '../../Services/Ops';
 import { base } from '../../Constants/Data.constant';
 import Swal from 'sweetalert2';
 import { SideBar } from '../Common/SideBar';
+import FinancialReport from './FinancialReport';
+import Wallet from './Wallet';
 export default function CompanyDetails() {
 
   const location = useLocation();
@@ -289,20 +291,39 @@ export default function CompanyDetails() {
       alert("No file available to download");
       return;
     }
-
+    
     try {
       // Create a temporary anchor element
       const link = document.createElement('a');
+      
+      // Ensure URL uses HTTPS instead of HTTP
+      if (url.startsWith('http:')) {
+        url = url.replace('http:', 'https:');
+      }
+      
+      // Check if URL is relative and convert to absolute if needed
+      if (url.startsWith('/') && !url.startsWith('//')) {
+        url = window.location.origin + url;
+      }
+      
       link.href = url;
-
+      
       // Extract filename from URL or use a default name
       const filename = url.split('/').pop() || name + '.xlsx';
       link.download = filename;
-
+      
+      // Set additional attributes that might help in production
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      
       // Append to body, click and remove
       document.body.appendChild(link);
       link.click();
-      document.body.removeChild(link);
+      
+      // Small timeout before removing to ensure the download starts
+      setTimeout(() => {
+        document.body.removeChild(link);
+      }, 100);
     } catch (error) {
       console.error("Error downloading file:", error);
       alert("Failed to download file. Please try again.");
@@ -376,6 +397,7 @@ export default function CompanyDetails() {
                 </p>
 
               </div>
+              <Wallet/>
             </div>
           </div>
 
@@ -1053,6 +1075,8 @@ export default function CompanyDetails() {
           </div> */}
         </div>
 
+
+<FinancialReport />
       </div>
     </div>
   )

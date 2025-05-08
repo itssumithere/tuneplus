@@ -28,37 +28,37 @@ export const SideBar = (props) => {
                     : name == "All Transcations" ? "fa fa-random"
                       : "fa fa-sort-amount-asc"
   }
-  
+
   const downloadDatabase = async () => {
     try {
       // Show loading indicator or message to user
-      console.log("Database download started..."); 
+      console.log("Database download started...");
       // Make the API request
       const response = await getData(base.downloadDb);
       console.log("Download successful:", response);
       // if (response.data && response.data.status) {
-        console.log("Download successful:", response.data);
-        const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.href = url;
-        a.download = moment(new Date()).format("DD-MM-YYY HH:MM:SS")+"musicDB.json";
-        a.click();
+      console.log("Download successful:", response.data);
+      const blob = new Blob([JSON.stringify(response.data, null, 2)], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = moment(new Date()).format("DD-MM-YYY HH:MM:SS") + "musicDB.json";
+      a.click();
 
-        // If the API returns a file path or download URL
-        // if (response.data.data && response.data.data.filePath) {
-        //   // Create a download link for the file
-        //   const link = document.createElement('a');
-        //   link.href = `/api/download?path=${encodeURIComponent(response.data.data.filePath)}`;
-        //   link.download = response.data.data.filePath.split('/').pop();
-        //   document.body.appendChild(link);
-        //   link.click();
-        //   document.body.removeChild(link);
+      // If the API returns a file path or download URL
+      // if (response.data.data && response.data.data.filePath) {
+      //   // Create a download link for the file
+      //   const link = document.createElement('a');
+      //   link.href = `/api/download?path=${encodeURIComponent(response.data.data.filePath)}`;
+      //   link.download = response.data.data.filePath.split('/').pop();
+      //   document.body.appendChild(link);
+      //   link.click();
+      //   document.body.removeChild(link);
 
-        //   alert("Database downloaded successfully!");
-        // } else {
-        //   alert("Database processed successfully!");
-        // }
+      //   alert("Database downloaded successfully!");
+      // } else {
+      //   alert("Database processed successfully!");
+      // }
       // } else {
       //   console.error("Download failed:", response.data);
       //   alert("Failed to download database. Please try again.");
@@ -108,10 +108,15 @@ export const SideBar = (props) => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" onClick={()=>downloadDatabase()}>
+              <a className="nav-link" onClick={() => downloadDatabase()}>
                 <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon4.png')} />Download DB
               </a>
             </li>
+            {/* <li className="nav-item">
+              <a className="nav-link" href="/Financial Report">
+                <img className="img-fluid" title="Dashboard" src={require('../../assets/images/menu-icon6.png')} />Financial Report
+              </a>
+            </li> */}
           </>
 
         )}
@@ -148,12 +153,17 @@ export const SideBar = (props) => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/Financial Report">
+              <a className="nav-link" href="/Report">
                 <img className="img-fluid" title="Financial Report" src={require('../../assets/images/menu-icon7.png')} /> Financial Report
               </a>
             </li>
           </>
         )}
+        <li>
+          <a href="#" className="dropdown-item" onClick={handleLogout}>
+            <i className="fa fa-sign-out" style={{ fontSize: 24 }}></i> Logout
+          </a>
+        </li>
         {userProfile.role === "employee" &&
           userPermission?.menuPermission?.map((item, index) => (
             <li className="nav-item" key={index}>

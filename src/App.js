@@ -36,6 +36,8 @@ import CompanyManagement from "./Components/CompanyMangement/CompanyMangement";
 import AddCompany from "./Components/CompanyMangement/AddCompany";
 import CompanyDetails from "./Components/CompanyMangement/CompanyDetails";
 import { ForgetPassword } from './Components/Login/ForgetPassword';
+import Report from './Components/Report/Report';
+import ReportUpload from './Components/CompanyMangement/ReportUpload';
 
 
 function App() {
@@ -68,11 +70,12 @@ function App() {
       <Route path="/release-details" element={<ReleaseDetails />}></Route>
       {/* <Route path="/edit-permission" element={<EditUserPermission />}></Route> */}
       {/* <Route path="/Payment Operations" element={<PaymentOperations />}></Route>
-      <Route path="/Financial Report" element={<FinancialReport />}></Route>
+     
       <Route path="/multiple-release" element={<Dashboard />}></Route>*/}
       <Route path="/Withdraw Request" element={<WithdrawRequest />}></Route>
       <Route path="/All Transcations" element={<AllTranscations />}></Route>
-      {/* <Route path="/Upload" element={<Upload />}></Route> */}
+     
+      <Route path="/ReportUpload" element={<ReportUpload />}></Route>
     </Routes>
   }
   const companyRoute = () => {
@@ -99,7 +102,7 @@ function App() {
       <Route path="/Payment Operations" element={<PaymentOperations />}></Route>
       <Route path="/Financial Report" element={<FinancialReport />}></Route>
       <Route path="/multiple-release" element={<Dashboard />}></Route>
-      {/* <Route path="/Task" element={<Task />}></Route> */}
+      <Route path="/Report" element={<Report />}></Route>
       {/* <Route path="/ClientList" element={<ClientList />}></Route>
       <Route path="/EmployeeList" element={<EmployeeList />}></Route> */}
 

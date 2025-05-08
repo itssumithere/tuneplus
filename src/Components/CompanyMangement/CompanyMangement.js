@@ -100,6 +100,16 @@ const CompanyManagement = (props) => {
           >
             View
           </Button>
+          <Button
+            variant="contained"
+            color="secondary" // Corrected the color to "secondary"
+            size="small"
+            onClick={() => {
+              navigate("/ReportUpload", { state: { userId: params.row._id } });
+            }}
+          >
+            Report
+          </Button>
         </div>
 
       )

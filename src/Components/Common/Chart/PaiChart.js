@@ -1,7 +1,7 @@
 import React from "react";
 import { PieChart, pieArcLabelClasses } from "@mui/x-charts/PieChart";
 
-const CustomPieChart = ({ data }) => {
+const CustomPieChart = ({ data,size =500 }) => {
   // Calculate total for percentage
   const total = data.reduce((sum, item) => sum + item.y, 0);
 
@@ -14,7 +14,7 @@ const CustomPieChart = ({ data }) => {
   }));
 
   return (
-    <div style={{ backgroundColor: "#2A2A2A", padding: "20px", borderRadius: "12px", textAlign: "center", width: "500px", margin: "auto" }}>
+    <div style={{ backgroundColor: "#2A2A2A", padding: "20px", borderRadius: "12px", textAlign: "center",  margin: "auto" }}>
       <h2 style={{ color: "#FFF", fontSize: "18px", marginBottom: "10px" }}>📊 Top Store Sales</h2>
       <PieChart
         series={[
@@ -35,7 +35,7 @@ const CustomPieChart = ({ data }) => {
             fontSize: "14px", // Slightly larger for better readability
           },
         }}
-        width={500}
+        width={size == 'full' ? 900 : 500}
         height={320}
       />
     </div>
