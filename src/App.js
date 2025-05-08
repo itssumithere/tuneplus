@@ -71,6 +71,7 @@ function App() {
       {/* <Route path="/edit-permission" element={<EditUserPermission />}></Route> */}
       {/* <Route path="/Payment Operations" element={<PaymentOperations />}></Route>
      
+     
       <Route path="/multiple-release" element={<Dashboard />}></Route>*/}
       <Route path="/Withdraw Request" element={<WithdrawRequest />}></Route>
       <Route path="/All Transcations" element={<AllTranscations />}></Route>
