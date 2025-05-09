@@ -822,7 +822,7 @@ export default function ReportUpload() {
                                             />
                                         </div>
                                         <div className="form-group">
-                                            <label className="form-label mb-2">Select Store Excel:</label>
+                                            <label className="form-label mb-2">Select Excel:</label>
                                             <input
                                                 type="file"
                                                 accept=".csv"
