@@ -411,8 +411,8 @@ export const ReleaseDetails = () => {
                               <td>{item?.Price}</td>
                               <td>World</td>
                               <td></td>
-                              <td>{myRelease.step1?.originalReleaseDate}</td>
-                              <td>{myRelease.step1?.originalReleaseDate}</td>
+                              <td>{myRelease.step1?.originalReleaseDate.split('T')[0]}</td>
+                              <td>{myRelease.step1?.originalReleaseDate.split('T')[0]}</td>
                               <td></td>
                               <td>{myRelease?.step1?.pYear}</td>
                               <td>{myRelease?.step1?.pline}</td>

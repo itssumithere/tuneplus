@@ -1074,9 +1074,6 @@ export default function CompanyDetails() {
             </section>
           </div> */}
         </div>
-
-
-<FinancialReport />
       </div>
     </div>
   )
