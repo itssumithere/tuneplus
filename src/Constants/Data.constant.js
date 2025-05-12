@@ -1,5 +1,5 @@
-// const domainUrl = 'https://tuneplusbackend.onrender.com/';
-const domainUrl = 'http://localhost:8002/';
+const domainUrl = 'https://tuneplusbackend.onrender.com/';
+// const domainUrl = 'http://localhost:8002/';
 // const domainUrl = 'http://192.168.1.18:8001/';
 // const endpoint = "https://api.ridd.in/api/"
 
