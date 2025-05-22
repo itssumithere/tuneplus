@@ -38,6 +38,13 @@ import CompanyDetails from "./Components/CompanyMangement/CompanyDetails";
 import { ForgetPassword } from './Components/Login/ForgetPassword';
 import Report from './Components/Report/Report';
 import ReportUpload from './Components/CompanyMangement/ReportUpload';
+import TopStoreReport from './Components/Report/TopStore'
+import ReportMarket from './Components/Report/Market'
+import ReportTrack from './Components/Report/Track'
+import Dailytopstore from './Components/DailyTreads/TreadTopStore'
+import DailyMarket from './Components/DailyTreads/TreadMarket'
+import DailyTrack from './Components/DailyTreads/DailyTrack'
+import DailyStream from './Components/DailyTreads/DailyStream'
 
 
 function App() {
@@ -91,6 +98,10 @@ function App() {
       <Route path="/All drafts" element={<AllDraft />}></Route>
       <Route path="/all tracks" element={<AllTracks />}></Route>
       <Route path="/Daily Trends" element={<DailyTreads />}></Route>
+      <Route path="/Dailytopstore" element={<Dailytopstore />}></Route>
+      <Route path="/DailyMarket" element={<DailyMarket />}></Route>
+      <Route path="/DailyTrack" element={<DailyTrack />}></Route>
+      <Route path="/DailyStream" element={<DailyStream />}></Route>
       <Route path="/profile" element={<Profile />}></Route>
       <Route path="/bank information" element={<BankInformation />}></Route>
       <Route path="/support" element={<Support />}></Route>
@@ -104,6 +115,10 @@ function App() {
       <Route path="/Financial Report" element={<FinancialReport />}></Route>
       <Route path="/multiple-release" element={<Dashboard />}></Route>
       <Route path="/Report" element={<Report />}></Route>
+      <Route path="/ReportTopStore" element={<TopStoreReport />}></Route>
+      <Route path="/ReportMarket" element={<ReportMarket />}></Route>
+      <Route path="/ReportTrack" element={<ReportTrack />}></Route>
+
       {/* <Route path="/ClientList" element={<ClientList />}></Route>
       <Route path="/EmployeeList" element={<EmployeeList />}></Route> */}
 

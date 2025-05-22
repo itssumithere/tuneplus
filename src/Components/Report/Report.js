@@ -205,14 +205,92 @@ export default function Report() {
                                          getOverView(query);
                                         getTracks(query);
                                         // getInside(query)
-
-                                    }
-                                    }
+                                    }}
                                 />
-
                             </div>
                         </div>
-
+                        <div className="col-md-3 col-sm-6 col-12">
+                            <div className="form-group">
+                                <label htmlFor="quickSelect">Quick Select</label>
+                                <select 
+                                    className="form-control" 
+                                    id="quickSelect"
+                                    onChange={(e) => {
+                                        const today = new Date();
+                                        const selectedValue = e.target.value;
+                                        let newStartDate = new Date();
+                                        
+                                        switch(selectedValue) {
+                                            case '1month':
+                                                newStartDate.setMonth(today.getMonth() - 1);
+                                                break;
+                                            case '3months':
+                                                newStartDate.setMonth(today.getMonth() - 3);
+                                                break;
+                                            case '6months':
+                                                newStartDate.setMonth(today.getMonth() - 6);
+                                                break;
+                                            case '1year':
+                                                newStartDate.setFullYear(today.getFullYear() - 1);
+                                                break;
+                                            default:
+                                                newStartDate = today;
+                                        }
+                                        
+                                        setStartDate(newStartDate.toISOString().split('T')[0]);
+                                        setEndDate(today.toISOString().split('T')[0]);
+                                        
+                                        // Trigger search with new dates
+                                        let query = `startDate=${newStartDate.toISOString().split('T')[0]}&&endDate=${today.toISOString().split('T')[0]}`;
+                                        getStore(query);
+                                        getMarket(query);
+                                        getOverView(query);
+                                        getTracks(query);
+                                    }}
+                                >
+                                    <option  style={{
+                    backgroundColor: '#2b2b2b',
+                    color: '#ffffff',
+                    border: '1px solid #444',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    cursor: 'pointer'
+                  }} value="">Select Period</option>
+                  <option  style={{
+                    backgroundColor: '#2b2b2b',
+                    color: '#ffffff',
+                    border: '1px solid #444',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    cursor: 'pointer'
+                  }} value="1month">Last 1 Month</option>
+                  <option  style={{
+                    backgroundColor: '#2b2b2b',
+                    color: '#ffffff',
+                    border: '1px solid #444',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    cursor: 'pointer'
+                  }} value="3months">Last 3 Months</option>
+                  <option  style={{
+                    backgroundColor: '#2b2b2b',
+                    color: '#ffffff',
+                    border: '1px solid #444',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    cursor: 'pointer'
+                  }} value="6months">Last 6 Months</option>
+                  <option  style={{
+                    backgroundColor: '#2b2b2b',
+                    color: '#ffffff',
+                    border: '1px solid #444',
+                    borderRadius: '4px',
+                    padding: '8px',
+                    cursor: 'pointer'
+                  }} value="1year">Last 1 Year</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
 
 

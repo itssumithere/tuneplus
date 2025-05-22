@@ -13,6 +13,8 @@ export const SideBar = (props) => {
   const [subMenu, setSubMenu] = useState("")
   const [profileMenu, setProfileMenu] = useState(false)
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [analyticsMenu, setAnalyticsMenu] = useState(false);
+  const [financialReportMenu, setFinancialReportMenu] = useState(false);
   const toggleDropdown = () => {
     setDropdownVisible(!dropdownVisible);
   };
@@ -143,9 +145,133 @@ export const SideBar = (props) => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/Daily Trends">
+              <a className="nav-link" onClick={() => setAnalyticsMenu(!analyticsMenu)}>
                 <img className="img-fluid" title="Analytics" src={require('../../assets/images/menu-icon5.png')} /> Analytics
+                <i className={`fa fa-chevron-${analyticsMenu ? 'up' : 'down'} ml-2`}></i>
               </a>
+              {analyticsMenu && (
+                <ul className="sub-menu" style={{
+                  listStyle: 'none',
+                  paddingLeft: '20px',
+                  marginTop: '5px',
+                }}>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/Daily Trends"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-chart-line"></i> Overview
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/DailyMarket"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-music"></i> Market Data
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/Dailytopstore"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-shopping-cart"></i> Store Data
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/DailyTrack"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-chart-bar"></i> Track Data
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/DailyStream"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-stream"></i> Store Stream
+                    </a>
+                  </li>
+                </ul>
+              )}
             </li>
             <li className="nav-item">
               <a className="nav-link" href="/Payment Operations">
@@ -153,9 +279,111 @@ export const SideBar = (props) => {
               </a>
             </li>
             <li className="nav-item">
-              <a className="nav-link" href="/Report">
+              <a className="nav-link" onClick={() => setFinancialReportMenu(!financialReportMenu)}>
                 <img className="img-fluid" title="Financial Report" src={require('../../assets/images/menu-icon7.png')} /> Financial Report
+                <i className={`fa fa-chevron-${financialReportMenu ? 'up' : 'down'} ml-2`}></i>
               </a>
+              {financialReportMenu && (
+                <ul className="sub-menu" style={{
+                  listStyle: 'none',
+                  paddingLeft: '20px',
+                  marginTop: '5px',
+                }}>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/Report"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-chart-pie"></i> Overview
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/ReportTopStore"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-shopping-bag"></i> Store
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/ReportMarket"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-globe"></i> Market
+                    </a>
+                  </li>
+                  <li>
+                    <a 
+                      className="nav-link" 
+                      href="/ReportTrack"
+                      style={{
+                        padding: '8px 15px',
+                        color: '#fff',
+                        textDecoration: 'none',
+                        display: 'block',
+                        transition: 'all 0.3s ease',
+                      }}
+                      onMouseOver={(e) => {
+                        e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+                        e.target.style.borderRadius = '4px';
+                      }}
+                      onMouseOut={(e) => {
+                        e.target.style.backgroundColor = '';
+                        e.target.style.borderRadius = '';
+                      }}
+                    >
+                      <i className="fa fa-music"></i> Track
+                    </a>
+                  </li>
+                  
+                </ul>
+              )}
             </li>
           </>
         )}
